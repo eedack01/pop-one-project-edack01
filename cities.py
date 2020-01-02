@@ -9,15 +9,21 @@ def read_cities(file_name):
 
       Alabama -> Alaska -> Arizona -> ... -> Wyoming -> Alabama.
     """
-    pass
+    f = open(file_name,'r')
+    road_map = []
+    for line in f:
+        values =line.split('\t')
+        road_map.append((values[0],values[1],float(values[2]),float(values[3])))
+    return road_map 
+    f.close()
+
+read_cities('city-data.txt')
   
 def print_cities(road_map):
     """
     Prints a list of cities, along with their locations. 
     Print only one or two digits after the decimal point.
     """
-    pass
-
 def compute_total_distance(road_map):
     """
     Returns, as a floating point number, the sum of the distances of all 
