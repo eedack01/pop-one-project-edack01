@@ -9,21 +9,20 @@ def read_cities(file_name):
 
       Alabama -> Alaska -> Arizona -> ... -> Wyoming -> Alabama.
     """
-    f = open(file_name,'r')
     road_map = []
-    for line in f:
-        values =line.split('\t')
-        road_map.append((values[0],values[1],float(values[2]),float(values[3])))
-    return road_map 
-    f.close()
+    with open(file_name, 'r') as f:
+      for line in f:
+        tmp = line.split("\t")
+        road_map.append((tmp[0], tmp[1], float(tmp[2]), float(tmp[3])))
+    return road_map
 
-read_cities('city-data.txt')
-  
 def print_cities(road_map):
     """
     Prints a list of cities, along with their locations. 
     Print only one or two digits after the decimal point.
     """
+    for t in road_map:
+      print(f'{t[1]} ({t[2]:.2f}, {t[3]:.2f})')  
 def compute_total_distance(road_map):
     """
     Returns, as a floating point number, the sum of the distances of all 
@@ -73,6 +72,8 @@ def main():
     Reads in, and prints out, the city data, then creates the "best"
     cycle and prints it out.
     """
+    road_map = read_cities('city-data.txt')
+    print_cities(road_map)
     pass
 
 if __name__ == "__main__": #keep this in
