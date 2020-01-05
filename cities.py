@@ -22,7 +22,8 @@ def print_cities(road_map):
     Print only one or two digits after the decimal point.
     """
     for t in road_map:
-      print(f'{t[1]} ({t[2]:.2f}, {t[3]:.2f})')  
+      print(f'{t[1]} ({t[2]:.2f}, {t[3]:.2f})')
+     
 def compute_total_distance(road_map):
     """
     Returns, as a floating point number, the sum of the distances of all 
@@ -36,7 +37,6 @@ def compute_total_distance(road_map):
         dist = np.linalg.norm(loc1-loc2)
         total_distance += dist
     print(total_distance)
-
 
 def swap_cities(road_map, index1, index2):
     """
@@ -56,6 +56,10 @@ def shift_cities(road_map):
     to the position i+1. The city at the last position moves to the position
     0. Return the new road map. 
     """
+    last=road_map[-1] 
+    road_map[1:] = road_map[:-1] 
+    road_map[0] = last
+    print(road_map)
 
 def find_best_cycle(road_map):
     """
