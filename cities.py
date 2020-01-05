@@ -49,6 +49,15 @@ def swap_cities(road_map, index1, index2):
     Allow for the possibility that `index1=index2`,
     and handle this case correctly.
     """
+    new_road_map = road_map
+    new_road_map[index1],new_road_map[index2]=new_road_map[index2],new_road_map[index1]
+    new_total_distance = 0
+    for i in range(len(new_road_map)):
+        loc1=np.array((new_road_map[i%len(new_road_map)][2], new_road_map[i%len(new_road_map)][3]))
+        loc2= np.array((new_road_map[(i+1)%len(new_road_map)][2], new_road_map[(i+1)%len(new_road_map)][3]))
+        dist = np.linalg.norm(loc1-loc2)
+        new_total_distance += dist
+    print(new_road_map,new_total_distance)
 
 def shift_cities(road_map):
     """
