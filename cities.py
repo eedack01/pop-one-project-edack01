@@ -78,9 +78,10 @@ def find_best_cycle(road_map):
     Use randomly generated indices for swapping.
     """
     N = 50
-    number = N * random.random() 
-    index1= int(number)
-    index2= int(number)
+    number1 = N * random.random()
+    number2 = N * random.random()
+    index1= int(number1)
+    index2= int(number2)
     best_cycle = road_map
     best_distance = compute_total_distance(road_map)
     road_map_shift = road_map
@@ -93,7 +94,7 @@ def find_best_cycle(road_map):
         if map_distance[1] < best_distance:
             best_cycle = map_distance[0]
             best_distance = map_distance[1]
-    return best_cycle, best_distance
+    return best_cycle
     pass
 
 def print_map(road_map):
