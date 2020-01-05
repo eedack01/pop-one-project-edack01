@@ -103,12 +103,15 @@ def print_map(road_map):
     their connections, along with the cost for each connection 
     and the total cost.
     """
+    total_distance= 0
     print ("City       Connection    Cost")
     for i in range(len(road_map)):
         loc1=np.array((road_map[i%len(road_map)][2], road_map[i%len(road_map)][3]))
         loc2= np.array((road_map[(i+1)%len(road_map)][2], road_map[(i+1)%len(road_map)][3]))
         dist = np.linalg.norm(loc1-loc2)
         print ("{:<14}{:<11}{}".format(road_map[i][1],road_map[(i+1)%len(road_map)][1],dist))
+        total_distance += dist
+    print("Total cost is=", total_distance)
     pass
 
 def main():
