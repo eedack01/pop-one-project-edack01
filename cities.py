@@ -1,3 +1,5 @@
+import numpy as np
+import random
 def read_cities(file_name):
     """
     Read in the cities from the given `file_name`, and return 
@@ -16,6 +18,7 @@ def read_cities(file_name):
         road_map.append((tmp[0], tmp[1], float(tmp[2]), float(tmp[3])))
     return road_map
 
+
 def print_cities(road_map):
     """
     Prints a list of cities, along with their locations. 
@@ -23,7 +26,8 @@ def print_cities(road_map):
     """
     for t in road_map:
       print(f'{t[1]} ({t[2]:.2f}, {t[3]:.2f})')
-     
+    pass
+    
 def compute_total_distance(road_map):
     """
     Returns, as a floating point number, the sum of the distances of all 
@@ -36,7 +40,8 @@ def compute_total_distance(road_map):
         loc2= np.array((road_map[(i+1)%len(road_map)][2], road_map[(i+1)%len(road_map)][3]))
         dist = np.linalg.norm(loc1-loc2)
         total_distance += dist
-    print(total_distance)
+    return total_distance
+
 
 def swap_cities(road_map, index1, index2):
     """
@@ -57,7 +62,8 @@ def swap_cities(road_map, index1, index2):
         loc2= np.array((new_road_map[(i+1)%len(new_road_map)][2], new_road_map[(i+1)%len(new_road_map)][3]))
         dist = np.linalg.norm(loc1-loc2)
         new_total_distance += dist
-    print(new_road_map,new_total_distance)
+    return new_road_map,new_total_distance
+
 
 def shift_cities(road_map):
     """
@@ -65,10 +71,12 @@ def shift_cities(road_map):
     to the position i+1. The city at the last position moves to the position
     0. Return the new road map. 
     """
-    last=road_map[-1] 
-    road_map[1:] = road_map[:-1] 
-    road_map[0] = last
-    print(road_map)
+    new_road_map = road_map.copy()
+    last=new_road_map[-1] 
+    new_road_map[1:] = new_road_map[:-1] 
+    new_road_map[0] = last
+    return new_road_map
+
 
 def find_best_cycle(road_map):
     """
@@ -97,6 +105,7 @@ def find_best_cycle(road_map):
     return best_cycle
     pass
 
+
 def print_map(road_map):
     """
     Prints, in an easily understandable format, the cities and 
@@ -114,15 +123,61 @@ def print_map(road_map):
     print("Total cost is=", total_distance)
     pass
 
+
+def get_longitude(city):
+    """
+    Longitude coordinate of the city
+    """
+    return int(city[3])
+
+
+def get_latitude(city):
+    """
+    Latitude coordinate of the city
+    """
+    return int(city[2])
+
+
+def visualise(road_map):
+    """
+    This prints a matrix of -1s and replaces city coordinates with the city index
+    """
+    longitude = {
+        'min': get_longitude(min(road_map, key=get_longitude)),
+        'max': get_longitude(max(road_map, key=get_longitude))
+    }
+
+    latitude = {
+        'min': get_latitude(min(road_map, key=get_latitude)),
+        'max': get_latitude(max(road_map, key=get_latitude))
+    }
+
+    grid = [-1] * (longitude['max'] - longitude['min'] + 1)
+    for i in range(len(grid)):
+        grid[i] = [-1] * (latitude['max'] - latitude['min'] + 1)
+
+    print('grid: ' + str(len(grid)) + 'x' + str(len(grid[0])))
+
+    for index, city in enumerate(road_map, start=1):
+        x = get_longitude(city) - longitude['min']
+        y = get_latitude(city) - latitude['min']
+        print('city: (' + str(x) + ',' + str(y) + ')')
+
+        grid[x][y] = index
+
+    return grid, longitude, latitude
+
+
 def main():
     """
     Reads in, and prints out, the city data, then creates the "best"
     cycle and prints it out.
     """
     road_map = read_cities('city-data.txt')
-    print_cities(road_map)
-    compute_total_distance(road_map)
+    print(print_cities(road_map))
+    print(find_best_cycle(road_map))
     pass
+
 
 if __name__ == "__main__": #keep this in
     main()
